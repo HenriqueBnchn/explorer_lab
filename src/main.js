@@ -10,7 +10,7 @@ function setCardType(type) {
   const colors = {
     visa: ["#436D99", "#2D57F2"],
     mastercard: ["#C69347", "#DF6F29"],
-    amex: ["#47AFC6", "#fff"],
+    amex: ["#f1f1f1", "#47AFC6"],
     default: ["black", "gray"],
   }
 
@@ -63,6 +63,12 @@ const cardNumberPattern = {
     },
     {
       mask: "0000 0000 0000 0000",
+      regex: /^34\d{0,14}|^37\d{0,14}/,
+      cardType: "amex",
+    },
+
+    {
+      mask: "0000 0000 0000 0000",
       cardType: "default",
     },
   ],
@@ -104,4 +110,26 @@ function UpdateSecurityCode(code) {
   const ccSecurity = document.querySelector(".cc-security .value")
 
   ccSecurity.innerText = code.length === 0 ? "123" : code
+}
+
+cardNumberMasked.on("accept", () => {
+  const cardTyped = cardNumberMasked.masked.currentMask.cardType
+  setCardType(cardTyped)
+  UpdateCardNumber(cardNumberMasked.value)
+})
+
+function UpdateCardNumber(num) {
+  const ccNumber = document.querySelector(".cc-number")
+
+  ccNumber.innerText = num.length === 0 ? "1234 5678 9012 3456" : num
+}
+
+expirationDateMasked.on("accept", () => {
+  UpdateExpirationDate(expirationDateMasked.value)
+})
+
+function UpdateExpirationDate(date) {
+  const ccExpiration = document.querySelector(".cc-expiration .value")
+
+  ccExpiration.innerText = date.length === 0 ? 12 / 24 : date
 }
