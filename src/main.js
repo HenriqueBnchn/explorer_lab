@@ -23,10 +23,12 @@ globalThis.setCardType = setCardType
 
 const securityCode = document.querySelector("#security-code")
 
+//máscara apenas permite 4 números
 const securityCodePattern = {
   mask: "0000",
 }
 
+// utiliza função do imask para executar a máscara nno input
 const securityCodeMasked = IMask(securityCode, securityCodePattern)
 
 const expirationDate = document.querySelector("#expiration-date")
